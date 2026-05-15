@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:dayflow/view/tela_inicial_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -19,6 +20,10 @@ class _LoginViewState extends State<LoginView> {
           content: Text('Login realizado com sucesso!'),
           backgroundColor: Color(0xFFFB9B43),
         ),
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomeView()),
       );
     }
   }
