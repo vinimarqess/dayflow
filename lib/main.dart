@@ -1,7 +1,8 @@
 ﻿import 'package:flutter/material.dart';
-
 import 'view/login_view.dart';
-import 'view/register_view.dart';
+import 'view/registro_view.dart';
+import 'view/tela_inicial_view.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
           secondary: Color(0xFFFBA150),
           surface: Color(0xFF161616),
         ),
+
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: const Color(0xFF2B2B2B),
@@ -34,9 +36,11 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const LoginView(),
+      initialRoute: '/login',
       routes: {
-        '/register': (_) => const RegisterView(),
+        '/login': (context) => const LoginView(),
+        '/register': (context) => const RegisterView(),
+        '/home': (context) => const HomeView(),
       },
     );
   }
