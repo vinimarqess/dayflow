@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:dayflow/view/evento_view.dart';
 import 'package:dayflow/view/rotina_view.dart';
+import 'package:dayflow/view/autenticador/perfil_view.dart';
+import 'package:dayflow/model/usuario_model.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+  final Usuario usuario;
+  const HomeView({super.key, required this.usuario});
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -28,10 +31,21 @@ class _HomeViewState extends State<HomeView> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
-            child: Icon(Icons.account_circle, color: orangeColor, size: 35),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PerfilView(usuario: widget.usuario),
+                  ),
+                );
+              },
+              child: Icon(Icons.account_circle, color: orangeColor, size: 35),
+            ),
           ),
         ],
       ),
+
       body: SingleChildScrollView(
         // Isso permite deslizar a tela para baixo
         padding: const EdgeInsets.symmetric(horizontal: 20),

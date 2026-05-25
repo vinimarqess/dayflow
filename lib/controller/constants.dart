@@ -1,1 +1,1 @@
-const String baseUrl = "http://10.0.2.2/dayflow_project/backend/api";
+const String baseUrl = "http://localhost/backend/api";

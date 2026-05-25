@@ -1,6 +1,6 @@
 ﻿import 'package:flutter/material.dart';
-import 'view/login_view.dart';
-import 'view/registro_view.dart';
+import 'view/Autenticador/login_view.dart';
+import 'view/Autenticador/registro_view.dart';
 import 'view/tela_inicial_view.dart';
 
 
@@ -39,8 +39,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login',
       routes: {
         '/login': (context) => const LoginView(),
-        '/register': (context) => const RegisterView(),
-        '/home': (context) => const HomeView(),
+        '/register': (context) => const RegisterView()
       },
     );
   }

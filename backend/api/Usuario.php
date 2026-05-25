@@ -1,4 +1,6 @@
 <?php
+error_reporting(0); // ← adiciona essa linha
+ini_set('display_errors', 0);
 
 include __DIR__ . "/../dao/UsuarioDAO.php";
 
@@ -34,7 +36,7 @@ switch ($acao) {
         
         // Mantive o seu padrão md5 conforme o modelo
         if ($usuario && $usuario->senha === md5($senha)) {
-            $usuario->senha = null; // Não retorna a senha pro Flutter
+            $usuario->senha = null;
             echo json_encode($usuario);
         } else {
             http_response_code(401);
@@ -58,8 +60,36 @@ switch ($acao) {
         echo json_encode(["mensagem" => "Cadastro realizado com sucesso!"]);
         break;
 
+    case "atualizar":
+        $id = $dados["id"] ?? "";
+        $nome_usuario = $dados["nome_usuario"] ?? "";
+        $email = $dados["email"] ?? "";
+
+        if (trim($nome_usuario) == "" || trim($email) == "") {
+            http_response_code(400);
+            echo json_encode(["erro" => "Preencha todos os campos."]);
+            break;
+        }
+
+        $dao->atualizar($id, $nome_usuario, $email);
+        echo json_encode(["mensagem" => "Perfil atualizado com sucesso!"]);
+        break;
+
     default:
         http_response_code(400);
         echo json_encode(["erro" => "Acao invalida."]);
         break;
+
+    case "excluir":
+    $id = $dados["id"] ?? "";
+
+    if (trim($id) == "") {
+        http_response_code(400);
+        echo json_encode(["erro" => "ID inválido."]);
+        break;
+    }
+
+    $dao->excluir($id);
+    echo json_encode(["mensagem" => "Usuário excluído com sucesso!"]);
+    break;    
 }
