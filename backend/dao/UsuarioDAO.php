@@ -4,7 +4,7 @@ include __DIR__ . "/../models/Usuario.php";
 
 class UsuarioDAO {
 
-    // Método privado para conectar ao banco de dados MySQL do XAMPP
+    // Metodo privado para conectar ao banco de dados MySQL do XAMPP
     private function conectar() {
         return new mysqli("localhost", "root", "", "dayflow", 3306);
     }
@@ -53,7 +53,7 @@ class UsuarioDAO {
     }
 
     /////////////////////////////////////////////////////////////////////////
-    //INSERIR NOVO USUARIO 
+    //INSERIR USUARIO 
     public function inserir($nome_usuario, $email, $senha) {
         $con = $this->conectar();
         

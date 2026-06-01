@@ -75,10 +75,10 @@ switch ($acao) {
         echo json_encode(["mensagem" => "Perfil atualizado com sucesso!"]);
         break;
 
-    default:
-        http_response_code(400);
-        echo json_encode(["erro" => "Acao invalida."]);
-        break;
+        default:
+            http_response_code(400);
+            echo json_encode(["erro" => "Acao invalida."]);
+            break;
 
     case "excluir":
     $id = $dados["id"] ?? "";
