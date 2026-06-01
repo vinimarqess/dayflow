@@ -1,56 +1,52 @@
-<?php 
-
+<?php
 include __DIR__ . "/../models/Diasemana.php";
 
 class DiasemanaDAO {
 
-    // Metodo privado para conectar ao banco de dados MySQL do XAMPP
     private function conectar() {
         return new mysqli("localhost", "root", "", "dayflow", 3306);
     }
 
-    /////////////////////////////////////////////////////////////////////////
-    // 1 LISTAR
-    public function listarPorDiasemana($id_diasemana) {
+    // 1. LISTAR POR ROTINA
+    public function listarPorRotina($id_rotina) {
         $con = $this->conectar();
-        $res = $con->query("SELECT * FROM diasemana WHERE id_diasemana='$id_diasemana'");
+        $res = $con->query("SELECT * FROM diasemana WHERE id_rotina='$id_rotina' ORDER BY id_diasemana");
         $lista = [];
-        
+
         while (($linha = $res->fetch_assoc()) != NULL) {
             $d = new Diasemana();
-            $d->id = $linha["id_diasemana"];
-            $d->nome  = $linha["nome"];
+            $d->id_diasemana = $linha["id_diasemana"];
+            $d->nome         = $linha["nome"];
+            $d->id_rotina    = $linha["id_rotina"];
             array_push($lista, $d);
         }
-        
+
         $con->close();
         return $lista;
     }
 
-    /////////////////////////////////////////////////////////////////
-    // 2 inserir
-    public function inserir($nome) {
+    // 2. INSERIR
+    public function inserir($nome, $id_rotina) {
         $con = $this->conectar();
-        
-        // limpeza dos dados
         $nomeLimpo = $con->real_escape_string($nome);
-        
-        $res = $con->query("INSERT INTO diasemana (nome) VALUES ('$nomeLimpo')");
+        $con->query("INSERT INTO diasemana (nome, id_rotina) VALUES ('$nomeLimpo', '$id_rotina')");
         $con->close();
-        
-        return $res; // retorna true ou false
     }
 
-    /////////////////////////////////////////////////////////////////////////
-    // 3 excluir    
+    // 3. EXCLUIR
     public function excluir($id_diasemana) {
         $con = $this->conectar();
-        $res = $con->query("DELETE FROM diasemana WHERE id_diasemana='$id_diasemana'");
+        $con->query("DELETE FROM diasemana WHERE id_diasemana='$id_diasemana'");
         $con->close();
-        
-        return $res; // retorna true ou false
     }
+
 
     /////////////////////////////////////////////////////////////////////////
     // 4 atualizar  
-    
+    public function atualizar($id_diasemana, $nome) {
+        $con = $this->conectar();
+        $nomeLimpo = $con->real_escape_string($nome);
+        $con->query("UPDATE diasemana SET nome='$nomeLimpo' WHERE id_diasemana='$id_diasemana'");
+        $con->close();
+    }
+}

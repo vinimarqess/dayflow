@@ -14,17 +14,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-$dao = new HabitoDAO();
-$acao = $_GET["acao"] ?? "";
+$dao   = new HabitoDAO();
+$acao  = $_GET["acao"] ?? "";
 $dados = json_decode(file_get_contents("php://input"), true);
 
 switch ($acao) {
 
     case "inserir":
-        $nome = $dados["nome"] ?? "";
+        $nome           = $dados["nome"] ?? "";
         $horario_inicio = $dados["horario_inicio"] ?? "";
-        $horario_fim = $dados["horario_fim"] ?? "";
-        $id_diasemana = $dados["id_diasemana"] ?? "";
+        $horario_fim    = $dados["horario_fim"] ?? "";
+        $id_diasemana   = $dados["id_diasemana"] ?? "";
 
         if (trim($nome) == "") {
             http_response_code(400);
@@ -43,13 +43,26 @@ switch ($acao) {
         break;
 
     case "atualizar":
-        $id_habito = $dados["id_habito"] ?? "";
-        $nome = $dados["nome"] ?? "";
+        $id_habito      = $dados["id_habito"] ?? "";
+        $nome           = $dados["nome"] ?? "";
         $horario_inicio = $dados["horario_inicio"] ?? "";
-        $horario_fim = $dados["horario_fim"] ?? "";
+        $horario_fim    = $dados["horario_fim"] ?? "";
 
         $dao->atualizar($id_habito, $nome, $horario_inicio, $horario_fim);
         echo json_encode(["mensagem" => "Hábito atualizado com sucesso!"]);
+        break;
+
+    case "atualizarStatus":
+        $id_habito = $dados["id_habito"] ?? "";
+        $concluido = $dados["concluido"] ?? 0;
+
+        if ($id_habito != "") {
+            $dao->atualizarStatus($id_habito, $concluido);
+            echo json_encode(["mensagem" => "Status do hábito atualizado!"]);
+        } else {
+            http_response_code(400);
+            echo json_encode(["erro" => "ID do hábito não informado."]);
+        }
         break;
 
     case "excluir":
@@ -61,18 +74,5 @@ switch ($acao) {
     default:
         http_response_code(400);
         echo json_encode(["erro" => "Ação inválida."]);
-        break;
-
-    case "atualizarStatus":
-        $id_habito = $dados["id_habito"] ?? "";
-        $concluido = $dados["concluido"] ?? 0; // 1 para verde, 0 para cinza
-
-        if ($id_habito != "") {
-            $dao->atualizarStatus($id_habito, $concluido);
-            echo json_encode(["mensagem" => "Status do hábito atualizado!"]);
-        } else {
-            http_response_code(400);
-            echo json_encode(["erro" => "ID do hábito não informado."]);
-        }
         break;
 }
