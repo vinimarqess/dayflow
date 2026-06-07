@@ -2,6 +2,7 @@
 import 'view/Autenticador/login_view.dart';
 import 'view/Autenticador/registro_view.dart';
 import 'view/tela_inicial_view.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 
 void main() {
@@ -14,6 +15,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
+      // configuraçao do idioma
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('pt', 'BR'),
+      ],
+
       debugShowCheckedModeBanner: false,
       title: 'Dayflow',
       theme: ThemeData(
@@ -41,6 +53,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginView(),
         '/register': (context) => const RegisterView()
       },
+
+
     );
   }
 }
